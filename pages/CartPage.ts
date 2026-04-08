@@ -1,10 +1,11 @@
-import { type Locator, type Page } from "@playwright/test";
+import { expect, type Locator, type Page } from "@playwright/test";
 
 export class CartPage {
   readonly page: Page;
   readonly removeBikeLightButton: Locator;
   readonly checkoutButton: Locator;
   readonly continueShoppingButton: Locator;
+  readonly cartItemRows: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -15,6 +16,7 @@ export class CartPage {
     this.continueShoppingButton = page.locator(
       '[data-test="continue-shopping"]',
     );
+    this.cartItemRows = page.locator('[data-test="inventory-item"]');
   }
 
   async removeBikeLightToCart() {
@@ -27,5 +29,9 @@ export class CartPage {
 
   async continueShopping() {
     await this.continueShoppingButton.click();
+  }
+
+  async verifyCartItemCount(expectedCount: number) {
+    await expect(this.cartItemRows).toHaveCount(expectedCount);
   }
 }
