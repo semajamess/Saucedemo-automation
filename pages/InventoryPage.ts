@@ -50,4 +50,8 @@ export class InventoryPage {
   async verifyCartBadgeCount(expectedCount: string) {
     await expect(this.cartBadge).toHaveText(expectedCount);
   }
+
+  async verifyLoggedIn() {
+    await expect(this.page.locator(".title")).toHaveText("Products");
+  }
 }
